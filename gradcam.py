@@ -94,7 +94,7 @@ class FeatureExtractor_v2():
                 module.register_forward_hook(self.save_output)
 
     def save_gradient(self, module, grad_input, grad_output):
-        self.gradients.insert(0, grad_input)
+        self.gradients.insert(0, grad_output)
 
     def save_output(self, module, input, output):
         self.activations.append(output)
@@ -364,7 +364,7 @@ if __name__ == '__main__':
 
     # If None, returns the map for the highest scoring category.
     # Otherwise, targets the requested index.
-    target_index = 0
+    target_index = 1
     mask_list = grad_cam(input, target_index)
     gb_model = GuidedBackpropReLUModel(model=phase_classifier, use_cuda=args.use_cuda)
     gb = gb_model(input, index=target_index)
